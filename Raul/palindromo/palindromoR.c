@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 
 void read_word (char *v, int *i) {
   	char x;
+    scanf("%c", &x);
   	for (*i = 0;x != 10;*i = *i + 1) {
 	  	v[*i] = x;
 		scanf("%c", &x); 
@@ -32,17 +32,17 @@ int palindromo (char v[], int ini, int fim) {
 
 int main () {
     int size;
-    char *vetor;
-	char *tmp = (char *) malloc(100 * sizeof(char));
-    read_word(tmp, &size);
-    vetor = (char *) realloc(tmp, size * sizeof(char));
+	char *vetor; 
+    vetor = (char *) malloc(100 * sizeof(char));
     if (vetor == NULL) {
-        printf("Realloc falhou");
+        printf("Malloc falhou. Abortando por questões de segurança");
         return 0;
     }
-  	if (palindromo(vetor, 0, sizeof(vetor))) 
+    read_word(vetor, &size);
+  	if (palindromo(vetor, 0, size-1)) 
 	  printf("SIM\n");
 	else 
 	  printf("NAO\n");
+    free(vetor);
 	return 1;
 }

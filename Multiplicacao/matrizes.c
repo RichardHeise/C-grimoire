@@ -56,15 +56,26 @@ int main() {
     matrix1 = (int **)malloc(linhas1 * sizeof(int *));
     for (i = 0; i < linhas1; i = i + 1)
         matrix1[i] = (int *)malloc(colunas1 * sizeof(int));
-        
+    if (matrix1 == NULL) {
+        printf("Malloc falhou. Abortando");
+        return 0;
+    }
     matrix2 = (int **)malloc(linhas2 * sizeof(int *));
     for (i = 0; i < linhas2; i = i + 1) 
         matrix2[i] = (int *)malloc(colunas2 * sizeof(int));
  
+    if (matrix2 == NULL) {
+        printf("Malloc falhou. Abortando");
+        return 0;
+    }
     matrix_resposta = (int **)malloc(linhas1 * sizeof(int *));
     for (i = 0; i < linhas1; i = i + 1)
         matrix_resposta[i] = (int *)malloc(colunas2 * sizeof(int));
 
+    if (matrix_resposta == NULL) {
+        printf("Malloc falhou. Abortando");
+        return 0;
+    }
     printf("Escreva os elementos da matrix A \n ");
     read_matrix(linhas1, colunas1, matrix1);
     printf("Escreva os elementos da matrix B \n ");
@@ -78,5 +89,8 @@ int main() {
     multiplica_matriz(matrix1, matrix2, &linhas1, &colunas1, &colunas2, matrix_resposta);
     printf("Resultado: \n");
     print_matrix(linhas1, colunas2, matrix_resposta);
-    return 0;
+    free(matrix1);
+    free(matrix2);
+    free(matrix_resposta);
+    return 1;
 }        
