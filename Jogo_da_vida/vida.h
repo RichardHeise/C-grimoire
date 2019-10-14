@@ -39,7 +39,3 @@ void evolucao (tabuleiro *tab, celula *cel);
 
 /* escreve o tabuleiro na tela */
 void print_tabuleiro (tabuleiro *tab);
-
-
-
-
