@@ -3,7 +3,7 @@ typedef struct t_item t_item;
 
 struct t_nodo {
     int chave;
-    struct t_nodo *prox;
+    struct t_nodo *prox; 
 };
 typedef struct t_nodo t_nodo;
 

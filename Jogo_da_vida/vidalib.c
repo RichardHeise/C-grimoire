@@ -44,7 +44,7 @@ void print_tabuleiro (tabuleiro *tab) {
             if (tab->matrix[i][j] == 0 || tab->matrix[i][j] == -8) 
                 printf(" ");
             else 
-                printf("+"); 
+                printf("#"); 
         }
     printf("\n");
     }
@@ -53,11 +53,16 @@ void print_tabuleiro (tabuleiro *tab) {
 void aloca (tabuleiro *tab) {
     int i;
     /* aloca dinamicamente a matrix do struct tab */
+    tab->matrix = NULL; 
     tab->matrix = malloc(tab->lin * sizeof(int *)+1);
     for (i = 0; i <= tab->lin; ++i) {
         tab->matrix[i] = malloc(tab->col * sizeof(int)+1);
     /* +1 evita alguns seg fault */
     }
+}
+
+void libera (tabuleiro *tab) {
+    free(tab->matrix);
 }
 
 int cria_populacao (celula *cel, tabuleiro *tab) {
@@ -164,3 +169,4 @@ void evolucao (tabuleiro *tab, celula *cel) {
     }
     proxima_geracao(&*tab, Maux); 
 }
+

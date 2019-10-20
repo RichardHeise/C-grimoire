@@ -49,5 +49,8 @@ int main(int argc, char **argv) {
         printf("\033[H\033[J");
         evolucao(&tabuleiro, &celula);
     }
+        
+    libera(&tabuleiro);
+
     return 0;
 }

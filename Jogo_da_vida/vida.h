@@ -17,6 +17,9 @@ typedef struct celular
     int posx;
 } celula;
 
+/* libera memória alocada dinamicamente */
+void libera (tabuleiro *tab);
+
 /* função que cria o tabuleiro com bordas */
 void cria_tabuleiro (tabuleiro *tab);
 

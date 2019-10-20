@@ -3,6 +3,7 @@
 
 #define MAX 5
 
+
 int testa_insercao_inicio(t_lista *l) {
     int i;
 
@@ -168,7 +169,7 @@ void testa_busca(t_lista *c) {
 int main() {
     t_lista l, m, o, c; 
 
-    if (! cria_listas(&l,&m,&o,&c)) return 1; 
+    if (! cria_listas(&l,&m,&o,&c)) return 1;
     if (! testa_insercoes(&l,&m,&o)) return 1; 
     if (! testa_copia(&o,&c)) return 1; 
     if (! testa_concatencao(&l,&m)) return 1; 
