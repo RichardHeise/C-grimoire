@@ -21,12 +21,13 @@ void destroi_lista(t_lista *l) {
         t_nodo *ptraux = malloc(sizeof(t_nodo));
         if (ptraux == NULL) {
             printf("Falha de memória. Abortando.\n");
-            return 0;
+            return;
         }
         while (l->ini != NULL) {
             ptraux->prox = l->ini;
             l->ini = l->ini->prox;
             free(ptraux->prox); 
+            ptraux->prox = NULL;
         }
         free(ptraux);
         l->tamanho = 0;
@@ -37,8 +38,7 @@ void destroi_lista(t_lista *l) {
 /* um ponteiro auxiliar aponta para a primeira posição */
 /* o inicio passa a apontar para o auxiliar */
 int insere_inicio_lista(int x, t_lista *l) {
-    t_nodo *ptraux;
-    ptraux= malloc(sizeof(struct t_nodo));
+    t_nodo *ptraux = malloc(sizeof(struct t_nodo));
     if (ptraux == NULL) {
         printf("Falha de memória. Abortando.\n");
         return 0;
@@ -53,15 +53,14 @@ int insere_inicio_lista(int x, t_lista *l) {
 /* percorre a lista, usando um auxiliar, até achar o fim */
 /* o fim passa a apontar para o auxiliar e este recebe null */
 int insere_fim_lista(int x, t_lista *l) {
-    t_nodo *ptraux;
-    ptraux= malloc(sizeof(struct t_nodo));
-    if (ptraux == NULL) {
-        printf("Falha de memória. Abortando.\n");
-        return 0;
-    }
     if (l->ini == NULL) {
         insere_inicio_lista(x, l);
         return 1;
+    }
+    t_nodo *ptraux = malloc(sizeof(struct t_nodo));
+    if (ptraux == NULL) {
+        printf("Falha de memória. Abortando.\n");
+        return 0;
     }
     ptraux->chave = x;
     ptraux->prox = l->ini;
@@ -84,7 +83,7 @@ int insere_ordenado_lista(int x, t_lista *l) {
     }
     /* se a primeira posição é menor que o elemento */
     /* o elemento é inserido no início */
-    if (x < l->ini->chave) {
+    if (x <= l->ini->chave) {
         insere_inicio_lista(x, l);
         return 1;
     } 
@@ -122,6 +121,7 @@ int insere_ordenado_lista(int x, t_lista *l) {
     /* andamos até a última posição e não achamos o lugar de x; */
     /* comparamos, então, com o último elemento */
     if (x > ptraux->prox->chave) {
+        free(ptraux);
         insere_fim_lista(x, l);
         return 1;
     }
@@ -134,13 +134,14 @@ void imprime_lista(t_lista *l) {
         t_nodo *ptraux = malloc(sizeof(t_nodo));
         if (ptraux == NULL) {
             printf("Falha de memória. Abortando.\n\n");
-            return 0;
+            return;
         } 
         ptraux->prox = l->ini;
         while (ptraux->prox != NULL) {
             printf("%d ", ptraux->prox->chave);
             ptraux->prox = ptraux->prox->prox;
         }
+        free(ptraux);
         printf("\n");
     }
 }
@@ -167,8 +168,8 @@ int remove_primeiro_lista(int *item, t_lista *l) {
 
 /* andamos até o último nodo e o removemos */
 int remove_ultimo_lista(int *item, t_lista *l) {
-        /* se a lista não for vazia */
-        if (l->ini != NULL) {
+    /* se a lista não for vazia */
+    if (l->ini != NULL) {
         /* se o tamanho da lista é 1, então removemos o único nodo */
         if (l->tamanho == 1) {
             remove_primeiro_lista(item, l);
@@ -219,6 +220,7 @@ int remove_item_lista(int chave, int *item, t_lista *l) {
             if (ptraux->prox->prox->chave == chave) {
                 t_nodo *tmp = malloc(sizeof(t_nodo));
                 if (tmp == NULL) {
+                    free(ptraux);
                     printf("Falha de memória. Abortando.\n");
                     return 0;
                 }
@@ -231,6 +233,7 @@ int remove_item_lista(int chave, int *item, t_lista *l) {
                 return 1;
             }
             printf("elemento não encontrado.\n");
+            free(ptraux);
             return 0;
         }
     }
@@ -253,8 +256,10 @@ int pertence_lista(int chave, t_lista *l) {
     /* se encontramos, retornamos 1 */
     if (ptraux->prox->chave == chave) {
         free(ptraux);
+        ptraux = NULL;
         return 1;
     }
+    free(ptraux);
     return 0;
 }
 
