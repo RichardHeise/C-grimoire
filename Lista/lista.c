@@ -301,4 +301,3 @@ int copia_lista(t_lista *l, t_lista *m) {
     free(ptraux);
     return 1;
 }
-
