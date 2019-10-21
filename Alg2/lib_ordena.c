@@ -20,7 +20,7 @@ void troca (int *i, int *j) {
     *j = aux;
 }
 
-void gera_vetor_em_ordem (int v[], int tam) {
+void gera_vetor_ordenado (int v[], int tam) {
     int i;
 
     for (i=0; i<tam; i++)
@@ -46,7 +46,7 @@ void embaralha_vetor (int v[], int tam) {
     }
 }
 
-void intercala (int v[], int ini, int meio, int fim) {
+void intercala_normal (int v[], int ini, int meio, int fim) {
     int i;
     int j;
     int k = 0;
@@ -73,6 +73,38 @@ void intercala (int v[], int ini, int meio, int fim) {
         k++;
         i++;
     }  
+}
+
+void intercala(int v[], int ini, int meio, int fim) {
+    if (v[meio] < v[meio+1])
+        return;
+    int i;
+    int j;
+    int k = 0;
+    int Vaux[MAX];
+    for (i = ini; i <= fim; i++) {
+        Vaux[i] = v[i];
+    }
+
+    i = ini;
+    j = (meio + 1);
+    k = ini;
+    while (i <= meio && j <= fim) {
+        if (Vaux[i] <= Vaux[j]) {
+            v[k] = Vaux[i];
+            i++;
+        }
+        else {
+            v[k] = Vaux[j];
+            j++;
+        }
+        k++;
+    }
+    while (i <= meio) {
+        v[k] = Vaux[i];
+        k++;
+        i++;
+    }
 }
 
 int particiona (int v[], int ini, int fim) {
@@ -122,6 +154,17 @@ void mergesort (int v[], int ini, int fim) {
     }
 }
 
+void mergesort_normal (int v[], int ini, int fim) {
+    if (ini < fim) {
+        int meio;
+        meio = ((fim + ini) / 2);
+        mergesort_normal(v, ini, meio);
+        mergesort_normal(v, meio+1, fim);
+        intercala_normal(v, ini, meio, fim);
+    }
+}
+
+
 int particiona_mediana3(int v[], int ini, int fim) {
     int pivo;
     int j;
@@ -159,6 +202,14 @@ void quicksort_mediana3_insertion (int v[], int ini, int fim) {
         quicksort_mediana3_insertion(v, ini, p - 1);
         quicksort_mediana3_insertion(v, p + 1, fim);
     }
+}    
+void quicksort_mediana3 (int v[], int ini, int fim) {
+    if (ini < fim) {
+        int p = particiona_mediana3(v, ini, fim);
+        quicksort_mediana3(v, ini, p - 1);
+        quicksort_mediana3(v, p + 1, fim);
+    }
+
 }
 
 

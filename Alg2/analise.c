@@ -23,7 +23,7 @@ int main () {
     /* testes com vetores gerados randomicamente */
 
     /* defina tam como voce achar melhor */
-    tam = 100000;
+    tam = 10000;
     soma_tempo = 0;
     for (i=0; i<MAX_IT; i++) {
         gera_vetor_randomico (v,tam);
@@ -34,7 +34,7 @@ int main () {
         soma_tempo += (fim-ini);
         /* nao conta o tempo de embaralhar */
     }
-    printf("tempo medio do quicksort: %f\n", soma_tempo/MAX_IT);
+    printf("tempo medio do quicksort mediana de 3 com insertion: %f\n", soma_tempo/MAX_IT);
     soma_tempo = 0;
         for (i=0; i<MAX_IT; i++) {
         gera_vetor_randomico (v,tam);
@@ -43,9 +43,9 @@ int main () {
         fim = timestamp();
         soma_tempo += (fim-ini);    /* nao conta o tempo de embaralhar */
     }
-    printf("tempo medio do mergesort: %f\n", soma_tempo/MAX_IT);
-   /* soma_tempo = 0;
-       for (i=0; i<MAX_IT; i++) {
+    printf("tempo medio do mergesort que não chama intercala() se vetor já está ordenado: %f\n", soma_tempo/MAX_IT);
+        soma_tempo = 0;
+        for (i=0; i<MAX_IT; i++) {
         gera_vetor_randomico (v,tam);
         embaralha_vetor(v, tam);
         ini = timestamp();
@@ -53,6 +53,83 @@ int main () {
         fim = timestamp();
         soma_tempo += (fim-ini);    
     }
-    printf("tempo medio do insertionsort: %f\n", soma_tempo/MAX_IT); */
+    printf("tempo medio do insertionsort: %f\n", soma_tempo/MAX_IT); 
+        soma_tempo = 0;
+        for (i=0; i<MAX_IT; i++) {
+        gera_vetor_randomico (v,tam);
+        embaralha_vetor(v, tam);
+        ini = timestamp();
+        quicksort(v,0,tam-1);
+        fim = timestamp();
+        soma_tempo += (fim-ini);
+    }
+    printf("tempo medio do quicksort: %f\n", soma_tempo/MAX_IT);
+        soma_tempo = 0;
+        for (i=0; i<MAX_IT; i++) {
+        gera_vetor_randomico (v,tam);
+        embaralha_vetor(v, tam);
+        ini = timestamp();
+        mergesort_normal(v,0,tam-1);  
+        fim = timestamp();
+        soma_tempo += (fim-ini);    
+    }
+    printf("tempo medio do mergesort normal: %f\n", soma_tempo/MAX_IT);
+    printf("Agora para vetores ordenados\n");
+    soma_tempo = 0;
+        for (i=0; i<MAX_IT; i++) {
+        gera_vetor_ordenado (v,tam);
+        ini = timestamp();
+        insertionsort(v,0,tam-1);  
+        fim = timestamp();
+        soma_tempo += (fim-ini);    
+    }
+    printf("tempo medio do insertionsort: %f\n", soma_tempo/MAX_IT); 
+    soma_tempo = 0;
+        for (i=0; i<MAX_IT; i++) {
+        gera_vetor_ordenado (v,tam);
+        ini = timestamp();
+        quicksort(v,0,tam-1);  
+        fim = timestamp();
+        soma_tempo += (fim-ini);    
+    }
+    printf("tempo medio do quicksort: %f\n", soma_tempo/MAX_IT); 
+    soma_tempo = 0;
+        for (i=0; i<MAX_IT; i++) {
+        gera_vetor_ordenado (v,tam);
+        ini = timestamp();
+        quicksort_mediana3_insertion(v,0,tam-1);  
+        fim = timestamp();
+        soma_tempo += (fim-ini);    
+    }
+    printf("tempo medio do quicksort mediana3 com insertionsort: %f\n", soma_tempo/MAX_IT); 
+    soma_tempo = 0;
+        for (i=0; i<MAX_IT; i++) {
+        gera_vetor_ordenado (v,tam);
+        ini = timestamp();
+        quicksort_mediana3(v,0,tam-1);  
+        fim = timestamp();
+        soma_tempo += (fim-ini);    
+    }
+    printf("tempo medio do quicksort mediana de 3 sem o insertion: %f\n", soma_tempo/MAX_IT); 
+    soma_tempo = 0;
+        for (i=0; i<MAX_IT; i++) {
+        gera_vetor_ordenado (v,tam);
+        ini = timestamp();
+        mergesort(v,0,tam-1);  
+        fim = timestamp();
+        soma_tempo += (fim-ini);    
+    }
+    printf("tempo medio do mergesort: %f\n", soma_tempo/MAX_IT); 
     return 0;
+    soma_tempo = 0;
+        for (i=0; i<MAX_IT; i++) {
+        gera_vetor_ordenado (v,tam);
+        ini = timestamp();
+        mergesort_normal(v,0,tam-1);  
+        fim = timestamp();
+        soma_tempo += (fim-ini);    
+    }
+    printf("tempo medio do mergesort que não chama intercala() se os vetores de comparação já estão ordenados: %f\n", soma_tempo/MAX_IT); 
+    return 0;
+
 }
